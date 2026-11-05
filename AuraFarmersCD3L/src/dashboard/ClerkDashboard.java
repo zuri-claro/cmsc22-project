@@ -1,5 +1,10 @@
 package dashboard;
 
-public class ClerkDashboard {
+/*
+ * ClerkDashboard
+ * 	- extends Dashboard
+ */
 
-}
+public class ClerkDashboard extends Dashboard{
+
+} // end of ClerkDashboard class

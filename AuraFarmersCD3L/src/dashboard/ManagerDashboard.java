@@ -1,5 +1,10 @@
 package dashboard;
 
-public class ManagerDashboard {
+/*
+ * ManagerDashboard
+ * 	- extends Dashboard
+ */
 
-}
+public class ManagerDashboard extends Dashboard{
+
+} // end of ManagerDashboard
