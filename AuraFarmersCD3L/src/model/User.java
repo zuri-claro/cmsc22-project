@@ -8,10 +8,10 @@ package model;
 public abstract class User {
 	
 	// ATTRIBUTES
-	private String username; // final
+	private final String username; // final
 	private String password;
-	private String name;
-	private String role; // final
+	private String displayName;
+	private final String role; // final
 	
 	public static final String CLERK = "CLERK";
 	public static final String MANAGER = "MANAGER";
@@ -20,12 +20,13 @@ public abstract class User {
 	/*
 	 * User(String, String, String, String)
 	 * 	- constructor method
+	 * 	- initializes username, password, displayName, role
 	 */
-	protected User(String username, String password, String name, String role) {
+	protected User(String username, String password, String displayName, String role) {
 		
 		this.username = username;
 		this.password = password;
-		this.name = name;
+		this.displayName = displayName;
 		this.role = role;
 		
 	} // end of constructor method
@@ -37,7 +38,7 @@ public abstract class User {
 	 * 	- getRole()
 	 */
 	public String getUsername() {return username;}
-	public String getName() {return name;}
+	public String getDisplayName() {return displayName;}
 	public String getRole() {return role;}
 	
 	/*

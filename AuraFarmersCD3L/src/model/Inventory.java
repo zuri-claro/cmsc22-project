@@ -1,5 +1,8 @@
 package model;
 
-public class Inventory {
+/*
+ * Inventory class
+ */
 
-}
+public class Inventory {
+} // end of Inventory class
