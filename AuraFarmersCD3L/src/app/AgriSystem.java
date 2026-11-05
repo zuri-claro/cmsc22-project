@@ -1,5 +1,5 @@
 package app;
 
-public class System {
+public class AgriSystem {
 
 }
