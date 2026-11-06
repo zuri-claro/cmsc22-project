@@ -45,10 +45,12 @@ public class Product {
 	
 	/*
 	 * GETTERS
+	 * 	- getProductId()
 	 * 	- getDescription()
 	 * 	- getPrice()
 	 * 	- getCategory()
 	 */
+	public int getProductId() {return productId;}
 	public String getDescription() {return description;}
 	public double getPrice() {return price;}
 	public Category getCategory() {return category;}
