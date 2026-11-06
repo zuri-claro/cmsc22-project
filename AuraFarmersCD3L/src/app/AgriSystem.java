@@ -61,14 +61,6 @@ public class AgriSystem {
     public InventoryService getInventoryService() {return inventoryService;}
     public User getCurrentUser() {return currentUser;}
 
-    // (TEMPORARY - to replace with login screen) picks a user without a password
-    public void loginAs(User user) {
-        currentUser = user;
-    }
-    public void logout() {
-        currentUser = null;
-    }
-
     /*
      * addProducts(Inventory)
      * 	- tinatamad ako ya
