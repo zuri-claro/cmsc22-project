@@ -12,8 +12,9 @@ public class Product {
 	private String name;
 	private String description;
 	private double price;
-	private boolean status;
-	// to add: category, units
+	private boolean isActive;
+	private Category category;
+	// to add: units
 	
 	// METHODS
 	/*
@@ -21,13 +22,14 @@ public class Product {
 	 * 	- constructor method
 	 * 	- initializes productId, name, description, price
 	 */
-	public Product(int productId, String name, String description, double price) {
+	public Product(int productId, String name, String description, double price, Category category) {
 		
 		this.productId = productId;
 		this.name = name;
 		this.description = description;
 		this.price = price;
-		this.status = true; // active by default
+		this.category = category;
+		this.isActive = true; // active by default
 		
 	} // end of constructor method
 	
@@ -39,12 +41,33 @@ public class Product {
 	 */
 	public void setName(String name) {this.name = name;}
 	public void setPrice(double price) {this.price = price;}
-	public void setStatus(boolean status) {this.status = status;}
+	public void setStatus(boolean status) {this.isActive = status;}
+	
+	/*
+	 * GETTERS
+	 * 	- getProductId()
+	 * 	- getDescription()
+	 * 	- getPrice()
+	 * 	- getCategory()
+	 */
+	public int getProductId() {return productId;}
+	public String getDescription() {return description;}
+	public double getPrice() {return price;}
+	public Category getCategory() {return category;}
 	
 	/*
 	 * isActive()
 	 * 	- returns whether product is active or inactive
 	 */
-	public boolean isActive() {return this.status;}
+	public boolean isActive() {return this.isActive;}
+
+	/*
+	 * toString()
+	 * 	- returns string containing product id and product name
+	 */
+    @Override
+    public String toString() {
+        return productId + " - " + name;
+    } // end of toString
 
 } // end of Product class
