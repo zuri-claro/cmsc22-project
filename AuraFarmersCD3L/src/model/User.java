@@ -49,4 +49,19 @@ public abstract class User {
 		return input.equals(this.password);
 	} // end of checkPassword
 	
+	/*
+	 * canModifyInventory()
+	 * 	- returns true for manager, false for clerk
+	 */
+	public abstract boolean canModifyInventory();
+	
+	/*
+	 * toString()
+	 * 	- returns a string containing the user's full name and their role
+	 */
+    @Override
+    public String toString() {
+        return this.displayName + " (" + role + ")";
+    } // end of toString
+	
 } // end of User class
