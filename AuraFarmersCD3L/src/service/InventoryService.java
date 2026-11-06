@@ -69,5 +69,39 @@ public class InventoryService {
         return null;
         
     } // end of restock
+	
+	/*
+	 * adjust(User, int, int)
+	 * 	- allows manager to override (completely change, not just add) stock of product in inventory
+	 * 	- possible errors: null user, user is not manager, quantity is invalid, item not in inventory
+	 */
+    public String adjust(User user, int productId, int newQuantity) {
+    	
+		// --- to change to error exception instead of js return string ---
+		// error: if user is null or is a clerk (can't modify inventory)
+        if (user == null || !user.canModifyInventory()) {
+            return "Only a manager can modify the inventory.";
+        } // end of if statement
+        
+        // error: quantity cannot be negative
+        if (newQuantity < 0) {
+            return "Stock cannot be negative.";
+        } // end of if statement
+
+        // search for item in inventory
+        InventoryItem item = inventory.findByProductId(productId);
+        
+        // error: item not found
+        if (item == null) {
+            return "Product not found: " + productId;
+        } // end of if statement
+        
+        // update stock of item
+        int change = newQuantity - item.getCurrentStock();
+        item.setCurrentStock(newQuantity);
+        movements.add(new StockMovement(productId, change, item.getCurrentStock(), user.getUsername()));
+        return null;
+        
+    } // end of adjust
 
 } // end of InventoryService class
