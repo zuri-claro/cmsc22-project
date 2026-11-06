@@ -2,7 +2,7 @@ package model;
 
 /*
  * Role enum
- * 	- to avoid the use of string constants and for better organization
+ * 	- roles for Manager and Clerk
  * 	- access by using Role.MANAGER or Role.CLERK
  */
 

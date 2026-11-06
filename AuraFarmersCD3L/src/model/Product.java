@@ -12,17 +12,9 @@ public class Product {
 	private String name;
 	private String description;
 	private double price;
-	private boolean status;
-	private String category;
+	private boolean isActive;
+	private Category category;
 	// to add: units
-	
-	// category constants
-    public static final String SEEDS = "Seeds";
-    public static final String FERTILIZERS_SOIL = "Fertilizers and Soil Amendments";
-    public static final String PESTICIDES = "Pesticides";
-    public static final String HAND_TOOLS = "Hand Tools";
-    public static final String WATERING = "Watering Supplies";
-    public static final String PLANTING_MATERIALS = "Planting Materials";
 	
 	// METHODS
 	/*
@@ -30,13 +22,14 @@ public class Product {
 	 * 	- constructor method
 	 * 	- initializes productId, name, description, price
 	 */
-	public Product(int productId, String name, String description, double price) {
+	public Product(int productId, String name, String description, double price, Category category) {
 		
 		this.productId = productId;
 		this.name = name;
 		this.description = description;
 		this.price = price;
-		this.status = true; // active by default
+		this.category = category;
+		this.isActive = true; // active by default
 		
 	} // end of constructor method
 	
@@ -48,12 +41,12 @@ public class Product {
 	 */
 	public void setName(String name) {this.name = name;}
 	public void setPrice(double price) {this.price = price;}
-	public void setStatus(boolean status) {this.status = status;}
+	public void setStatus(boolean status) {this.isActive = status;}
 	
 	/*
 	 * isActive()
 	 * 	- returns whether product is active or inactive
 	 */
-	public boolean isActive() {return this.status;}
+	public boolean isActive() {return this.isActive;}
 
 } // end of Product class
