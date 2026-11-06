@@ -44,11 +44,21 @@ public class Product {
 	public void setStatus(boolean status) {this.isActive = status;}
 	
 	/*
+	 * GETTERS
+	 * 	- getDescription()
+	 * 	- getPrice()
+	 * 	- getCategory()
+	 */
+	public String getDescription() {return description;}
+	public double getPrice() {return price;}
+	public Category getCategory() {return category;}
+	
+	/*
 	 * isActive()
 	 * 	- returns whether product is active or inactive
 	 */
 	public boolean isActive() {return this.isActive;}
-	
+
 	/*
 	 * toString()
 	 * 	- returns string containing product id and product name
