@@ -18,4 +18,11 @@ public final class Manager extends User{
 		super(username, password, fullName, User.MANAGER);
 	} // end of constructor method
 	
+	/*
+	 * canModifyInventory()
+	 * 	- returns true because class is manager
+	 */
+    @Override
+    public boolean canModifyInventory() {return true;}
+	
 } // end of Manager class

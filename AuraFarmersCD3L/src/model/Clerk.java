@@ -17,4 +17,11 @@ public class Clerk extends User{
 		super(username, password, fullName, User.CLERK);
 	} // end of constructor method
 	
+	/*
+	 * canModifyInventory()
+	 * 	- returns false because class is clerk
+	 */
+    @Override
+    public boolean canModifyInventory() {return false;}
+	
 } // end of Clerk class
