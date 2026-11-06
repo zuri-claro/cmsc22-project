@@ -48,5 +48,14 @@ public class Product {
 	 * 	- returns whether product is active or inactive
 	 */
 	public boolean isActive() {return this.isActive;}
+	
+	/*
+	 * toString()
+	 * 	- returns string containing product id and product name
+	 */
+    @Override
+    public String toString() {
+        return productId + " - " + name;
+    } // end of toString
 
 } // end of Product class
