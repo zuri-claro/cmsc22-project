@@ -11,10 +11,7 @@ public abstract class User {
 	private final String username; // final
 	private String password;
 	private String displayName;
-	private final String role; // final
-	
-	public static final String CLERK = "CLERK";
-	public static final String MANAGER = "MANAGER";
+	private final Role role; // final
 	
 	// METHODS
 	/*
@@ -22,7 +19,7 @@ public abstract class User {
 	 * 	- constructor method
 	 * 	- initializes username, password, displayName, role
 	 */
-	protected User(String username, String password, String displayName, String role) {
+	protected User(String username, String password, String displayName, Role role) {
 		
 		this.username = username;
 		this.password = password;
@@ -39,7 +36,7 @@ public abstract class User {
 	 */
 	public String getUsername() {return username;}
 	public String getDisplayName() {return displayName;}
-	public String getRole() {return role;}
+	public String getRole() {return role.toString();}
 	
 	/*
 	 * checkPassword(String)

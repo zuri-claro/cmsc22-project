@@ -15,7 +15,7 @@ public final class Manager extends User{
 	 * 	- initializes username, password, displayName
 	 */
 	public Manager(String username, String password, String fullName) {
-		super(username, password, fullName, User.MANAGER);
+		super(username, password, fullName, Role.MANAGER);
 	} // end of constructor method
 	
 	/*

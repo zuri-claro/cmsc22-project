@@ -13,7 +13,16 @@ public class Product {
 	private String description;
 	private double price;
 	private boolean status;
-	// to add: category, units
+	private String category;
+	// to add: units
+	
+	// category constants
+    public static final String SEEDS = "Seeds";
+    public static final String FERTILIZERS_SOIL = "Fertilizers and Soil Amendments";
+    public static final String PESTICIDES = "Pesticides";
+    public static final String HAND_TOOLS = "Hand Tools";
+    public static final String WATERING = "Watering Supplies";
+    public static final String PLANTING_MATERIALS = "Planting Materials";
 	
 	// METHODS
 	/*
