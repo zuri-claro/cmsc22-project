@@ -36,7 +36,7 @@ public abstract class User {
 	 */
 	public String getUsername() {return username;}
 	public String getDisplayName() {return displayName;}
-	public String getRole() {return role.toString();}
+	public Role getRole() {return role;}
 	
 	/*
 	 * checkPassword(String)
