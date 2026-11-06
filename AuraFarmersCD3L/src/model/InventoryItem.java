@@ -40,7 +40,7 @@ public class InventoryItem {
 	 * 	- setCurrentStock()
 	 * 	- setLowStockThreshold()
 	 */
-    public void setStock(int quantity) {currentStock = quantity;}
+    public void setCurrentStock(int quantity) {currentStock = quantity;}
     public void setLowStockThreshold(int threshold) {lowStockThreshold = threshold;}
     
 	/*
