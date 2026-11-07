@@ -51,10 +51,10 @@ public class Product {
 	 * 	- getCategory()
 	 */
 	public int getProductId() {return productId;}
+	public String getName() {return name;}
 	public String getDescription() {return description;}
 	public double getPrice() {return price;}
 	public Category getCategory() {return category;}
-	
 	/*
 	 * isActive()
 	 * 	- returns whether product is active or inactive

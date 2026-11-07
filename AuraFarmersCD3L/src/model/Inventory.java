@@ -62,5 +62,48 @@ public class Inventory {
         return count;
         
     } // end of getLowStockCount
+    
+    /*
+     * getActiveProductCount()
+     * - Counts all products that are currently active
+     */
+    public int getActiveProductCount() {
+
+        int count = 0;
+
+        for (InventoryItem item : items) {
+
+            if (item.getProduct().isActive()) {
+                count++;
+            }
+
+        }
+
+        return count;
+
+    } // end of getActiveProductCount
+
+
+    /*
+     * getOutOfStockCount()
+     * - Counts active products that have no remaining stock
+     */
+    public int getOutOfStockCount() {
+
+        int count = 0;
+
+        for (InventoryItem item : items) {
+
+            if (item.getProduct().isActive()
+                    && item.getCurrentStock() <= 0) {
+
+                count++;
+            }
+
+        }
+
+        return count;
+
+    } // end of getOutOfStockCount
 	
 } // end of Inventory class
