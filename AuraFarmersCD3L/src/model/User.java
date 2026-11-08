@@ -42,7 +42,7 @@ public abstract class User {
 	 * checkPassword(String)
 	 * 	- abstract method that checks if user input is same as user's password
 	 */
-	protected boolean checkPassword(String input) {
+	public boolean checkPassword(String input) {
 		return input.equals(this.password);
 	} // end of checkPassword
 	
