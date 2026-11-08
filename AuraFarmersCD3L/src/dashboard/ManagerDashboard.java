@@ -28,6 +28,8 @@ import javafx.scene.layout.VBox;
 import java.util.List;
 import java.util.function.Consumer;
 
+import app.AgriSystem;
+
 /*
  * ManagerDashboard class
  * - Extends Dashboard
@@ -59,7 +61,6 @@ public class ManagerDashboard extends Dashboard {
     private Consumer<Clerk> clerkDashboardAction;
     private Runnable inventoryAction;
 
-
     /*
      * ManagerDashboard(Manager, InventoryService, List<User>)
      * - Constructor method
@@ -88,8 +89,7 @@ public class ManagerDashboard extends Dashboard {
         updateStatistics();
 
     } // end of constructor method
-
-
+    
     /*
      * buildDashboard()
      * - Creates the Manager Dashboard layout

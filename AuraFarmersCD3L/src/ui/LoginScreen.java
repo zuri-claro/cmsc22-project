@@ -1,7 +1,10 @@
 package ui;
 
+import java.util.List;
+
 import app.AgriSystem;
 import model.*;
+import service.InventoryService;
 import dashboard.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -82,9 +85,11 @@ public class LoginScreen extends VBox {
         
         // open either manager dashboard or clerk dashboard
         if (user.getRole().equals(Role.MANAGER)) {
-        	//stage.setScene(new Scene(new ManagerDashboard(system), 900, 560));
+        	stage.setScene(new Scene(new ManagerDashboard((Manager) user, system.getInventoryService(), system.getUsers()), 900, 560));
+        	
         } else {
         	//stage.setScene(new Scene(new ClerkDashboard(system), 900, 560));
+        	
         } // end of if else statement
         
         // TEMPORARY FOR TESTING
