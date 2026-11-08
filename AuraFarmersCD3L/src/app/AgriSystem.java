@@ -6,6 +6,7 @@ import model.Inventory;
 import model.InventoryItem;
 import model.Manager;
 import model.Product;
+import model.Role;
 import model.User;
 import service.InventoryService;
 
@@ -23,11 +24,14 @@ public class AgriSystem {
 	// ATTRIBUTES
     private static AgriSystem instance; // only instance (for singleton class)
 
-    private final List<User> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
     private final InventoryService inventoryService;
     private User currentUser;
 
     // METHODS
+    
+    // methods to add: sign up (creates account)
+    
     /*
      * AgriSystem()
      * 	- constructor method
@@ -37,6 +41,12 @@ public class AgriSystem {
         Inventory inventory = new Inventory();
         this.addProducts(inventory);
         this.inventoryService = new InventoryService(inventory);
+        
+        // TEMPORARY FOR TESTINGGG - add users
+        User manager = new Manager("manager","manager123","m");
+        User clerk = new Clerk("clerk","clerk123","c");
+        users.add(manager);
+        users.add(clerk);
         
     } // end of constructor method
     
@@ -61,6 +71,23 @@ public class AgriSystem {
     public InventoryService getInventoryService() {return inventoryService;}
     public User getCurrentUser() {return currentUser;}
 
+    /*
+     * login(String, String)
+     * 	- returns User if that username and password is in users
+     * 	- null if not
+     */
+    public User login(String username, String password) {
+    	
+        for (User user : users) {
+            if (user.getUsername().equals(username) && user.checkPassword(password)) {
+                currentUser = user;
+                return user;
+            } // end of if statement
+        } // end of for loop
+        return null;
+        
+    } // end of login()
+    
     /*
      * addProducts(Inventory)
      * 	- tinatamad ako ya
