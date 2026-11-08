@@ -36,11 +36,6 @@ public class LoginScreen extends VBox {
         this.system = system;
         this.stage = stage;
         
-        // title and subtitle
-        Label title = new Label("Agriculture Data Management System");
-        title.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
-        Label subtitle = new Label("Please log in");
-        
         // prompt for username
         usernameField.setPromptText("Username");
         usernameField.setMaxWidth(250);
@@ -55,14 +50,10 @@ public class LoginScreen extends VBox {
 
         errorLabel.setStyle("-fx-text-fill: red;"); 
 
-        // TEMPORARY FOR TESTINGGGG
-        Label hint = new Label("Test accounts: manager | manager123, clerk | clerk123");
-        hint.setStyle("-fx-text-fill: gray;");
-
         setSpacing(12);
         setPadding(new Insets(30));
         setAlignment(Pos.CENTER);
-        getChildren().addAll(title, subtitle, usernameField, passwordField, loginButton, errorLabel, hint);
+        getChildren().addAll(usernameField, passwordField, loginButton, errorLabel);
         
     } // end of LoginScreen
     
