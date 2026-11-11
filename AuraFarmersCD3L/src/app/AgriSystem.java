@@ -8,6 +8,7 @@ import model.Manager;
 import model.Product;
 import model.Role;
 import model.User;
+import persistence.InventoryFileManager;
 import service.InventoryService;
 
 import java.util.ArrayList;
@@ -37,10 +38,23 @@ public class AgriSystem {
      * 	- constructor method
      */
     private AgriSystem() {
-
+    	
+        InventoryFileManager fileManager = new InventoryFileManager("data");
         Inventory inventory = new Inventory();
-        this.addProducts(inventory);
-        this.inventoryService = new InventoryService(inventory);
+        
+        // check if file is empty
+        if (fileManager.hasSavedItems()) { // if the file isnt empty, load what was saved before
+            for (InventoryItem item : fileManager.loadItems()) {
+                inventory.addItem(item);
+            } // end of for loop
+            
+        } else { // if empty, just add products
+        	this.addProducts(inventory);
+            fileManager.saveItems(inventory.getItems());
+            
+        } // end of if statement
+
+        inventoryService = new InventoryService(inventory, fileManager);
         
         // TEMPORARY FOR TESTINGGG - add users
         User manager = new Manager("manager","manager123","m");
