@@ -42,7 +42,7 @@ public class InventoryService {
 	 * 	- allows manager to add stock to an existing product in the inventory
 	 * 	- possible errors: null user, user is not manager, quantity is invalid, item not in inventory
 	 */
-	public String restock(User user, int productId, int quantity) {
+	public String restock(User user, int productId, int quantity, String reason) {
 		
 		// --- to change to error exception instead of js return string ---
 		// error: if user is null or is a clerk (can't modify inventory)
@@ -65,7 +65,7 @@ public class InventoryService {
         
         // if successful, set that stock item
         item.setCurrentStock(item.getCurrentStock() + quantity);
-        movements.add(new StockMovement(productId, quantity, item.getCurrentStock(), user.getUsername()));
+        movements.add(new StockMovement(productId, quantity, item.getCurrentStock(), user.getUsername(), reason));
         return null;
         
     } // end of restock
@@ -75,7 +75,7 @@ public class InventoryService {
 	 * 	- allows manager to override (completely change, not just add) stock of product in inventory
 	 * 	- possible errors: null user, user is not manager, quantity is invalid, item not in inventory
 	 */
-    public String adjust(User user, int productId, int newQuantity) {
+    public String adjust(User user, int productId, int newQuantity, String reason) {
     	
 		// --- to change to error exception instead of js return string ---
 		// error: if user is null or is a clerk (can't modify inventory)
@@ -99,9 +99,26 @@ public class InventoryService {
         // update stock of item
         int change = newQuantity - item.getCurrentStock();
         item.setCurrentStock(newQuantity);
-        movements.add(new StockMovement(productId, change, item.getCurrentStock(), user.getUsername()));
+        movements.add(new StockMovement(productId, change, item.getCurrentStock(), user.getUsername(), reason));
         return null;
         
     } // end of adjust
+    
+    // Changes the low-stock threshold. Manager only.
+    public String setThreshold(User user, int productId, int threshold) {
+        if (user == null || !user.canModifyInventory()) {
+            return "Only a Manager can change inventory.";
+        }
+        if (threshold < 0) {
+            return "Threshold cannot be negative.";
+        }
+        InventoryItem item = inventory.findByProductId(productId);
+        if (item == null) {
+            return "Unknown product: " + productId;
+        }
+
+        item.setLowStockThreshold(threshold);
+        return null;
+    }
 
 } // end of InventoryService class

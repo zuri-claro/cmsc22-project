@@ -18,7 +18,7 @@ public class Product {
 	
 	// METHODS
 	/*
-	 * Product(int, String, String, double)
+	 * Product(int, String, String, double, Category)
 	 * 	- constructor method
 	 * 	- initializes productId, name, description, price
 	 */
@@ -30,6 +30,22 @@ public class Product {
 		this.price = price;
 		this.category = category;
 		this.isActive = true; // active by default
+		
+	} // end of constructor method
+	
+	/*
+	 * Product(int, String, String, double, Category, boolean)
+	 * 	- constructor method only used if not active by default
+	 * 	- initializes productId, name, description, price, isActive
+	 */
+	public Product(int productId, String name, String description, double price, Category category, boolean active) {
+		
+		this.productId = productId;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.category = category;
+		this.isActive = active;
 		
 	} // end of constructor method
 	

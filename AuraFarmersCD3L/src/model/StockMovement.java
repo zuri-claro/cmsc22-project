@@ -12,20 +12,22 @@ public class StockMovement {
     private final int quantity;
     private final int newStock;
     private final String performedBy;
+    private final String reason;
     // might add: timestamp
 
     // METHODS
     /*
-     * StockMovement(String, int, int, int, String, String)
+     * StockMovement(int, int, int, String, String)
      * 	- constructor method
-     * 	- initializes all attributes :P
+     * 	- initializes all attributes
      */
-    public StockMovement(int productId, int quantity, int stockAfter, String performedBy) {
+    public StockMovement(int productId, int quantity, int stockAfter, String performedBy, String reason) {
         
         this.productId = productId;
         this.quantity = quantity;
         this.newStock = stockAfter;
         this.performedBy = performedBy;
+        this.reason = reason;
         
     } // end of constructor method
     
@@ -36,10 +38,12 @@ public class StockMovement {
      * 	- getStockAfter()
      * 	- getReason()
      * 	- getPerformedBy()
+     * 	- getReason()
      */
-    public int getProductId() { return productId; }
-    public int getQuantity() { return quantity; }
-    public int getStockAfter() { return newStock; }
-    public String getPerformedBy() { return performedBy; }	
+    public int getProductId() {return productId;}
+    public int getQuantity() {return quantity;}
+    public int getStockAfter() {return newStock;}
+    public String getPerformedBy() {return performedBy;}	
+    public String getReason() {return reason;}
 	
 } // end of StockMovement class
