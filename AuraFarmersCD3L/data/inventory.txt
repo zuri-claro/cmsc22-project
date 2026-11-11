@@ -1,0 +1,17 @@
+1|Tomato Seeds|description|35.0|SEEDS|true|20|5
+2|Pechay Seeds|description|25.0|SEEDS|true|20|5
+3|Sweet Corn Seeds|description|50.0|SEEDS|true|20|5
+4|Organic Compost|description|120.0|FERTILIZERS_SOIL|true|20|5
+5|Complete Fertilizer|description|180.0|FERTILIZERS_SOIL|true|20|5
+6|Vermicast|description|100.0|FERTILIZERS_SOIL|true|20|5
+7|General-Purpose Insecticide|description|150.0|PESTICIDES|true|20|5
+8|Garden Fungicide|description|180.0|PESTICIDES|true|20|5
+9|Garden Herbicide|description|200.0|PESTICIDES|true|20|5
+10|Hand Trowel|description|100.0|HAND_TOOLS|true|20|5
+11|Pruning Shears|description|180.0|HAND_TOOLS|true|20|5
+12|Hand Cultivator|description|120.0|HAND_TOOLS|true|20|5
+13|Watering Can|description|150.0|WATERING|true|20|5
+14|Hose Nozzle|description|90.0|WATERING|true|20|5
+15|Seedling Tray|description|80.0|PLANTING_MATERIALS|true|20|5
+16|Nursery Pots|description|10.0|PLANTING_MATERIALS|true|20|5
+17|Plant Labels|description|30.0|PLANTING_MATERIALS|true|20|5

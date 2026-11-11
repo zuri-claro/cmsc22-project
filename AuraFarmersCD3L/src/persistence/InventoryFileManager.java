@@ -95,11 +95,11 @@ public class InventoryFileManager {
             	// skip whitespace
                 if (line.trim().isEmpty()) {continue;}
                 
-                // divide each line into 6 parts
+                // divide each line into 8 parts
                 String[] parts = line.split("\\|", -1);
                 
                 // error: not divided properly
-                if (parts.length != 6) {
+                if (parts.length != 8) {
                     continue;
                 } // end of if statement
                 
@@ -111,7 +111,7 @@ public class InventoryFileManager {
                     String description = parts[2];
                     double price = Double.parseDouble(parts[3]);
                     Category category = Category.valueOf(parts[4]);
-                    boolean status = Boolean.getBoolean(parts[5]);
+                    boolean status = Boolean.parseBoolean(parts[5]);
                     int stock = Integer.parseInt(parts[6]);
                     int threshold = Integer.parseInt(parts[7]);
                     
@@ -120,8 +120,9 @@ public class InventoryFileManager {
                     items.add(new InventoryItem(product, stock, threshold));
                     
                 } catch (RuntimeException e) {
-                    System.out.println("Skipped a bad line in inventory file: " + line);
                 } // end of try catch
+                
+                line = reader.readLine();
                 
             } // end of while loop
             reader.close();
@@ -166,8 +167,8 @@ public class InventoryFileManager {
         try {
         	
         	BufferedReader reader = new BufferedReader(new FileReader(movementsFile));
-            String line;
-            while ((line = reader.readLine()) != null) {
+            String line = reader.readLine();
+            while (line != null) {
             	
                 if (line.trim().isEmpty()) {
                     continue;
@@ -190,6 +191,9 @@ public class InventoryFileManager {
                 } catch (RuntimeException e) {
                     System.out.println("Skipped a bad line in movements file: " + line);
                 } // end of try catch
+                
+                line = reader.readLine();
+                
             } // end of while loop
             reader.close();
             

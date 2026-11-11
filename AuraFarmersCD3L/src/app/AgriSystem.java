@@ -104,11 +104,27 @@ public class AgriSystem {
     
     /*
      * addProducts(Inventory)
-     * 	- tinatamad ako ya
+     * 	- hardcoded all products
      * 	- to put ALL our products so that our inventory is complete
      */
     private void addProducts(Inventory inventory) {
-        add(inventory, 1, "Tomato Seeds", "delicious", 1, Category.SEEDS, 1, 1);
+    	add(inventory, 1, "Tomato Seeds", "description", 35.0, Category.SEEDS, 20, 5);
+    	add(inventory, 2, "Pechay Seeds", "description", 25.0, Category.SEEDS, 20, 5);
+    	add(inventory, 3, "Sweet Corn Seeds", "description", 50.0, Category.SEEDS, 20, 5);
+    	add(inventory, 4, "Organic Compost", "description", 120.0, Category.FERTILIZERS_SOIL, 20, 5);
+    	add(inventory, 5, "Complete Fertilizer", "description", 180.0, Category.FERTILIZERS_SOIL, 20, 5);
+    	add(inventory, 6, "Vermicast", "description", 100.0, Category.FERTILIZERS_SOIL, 20, 5);
+    	add(inventory, 7, "General-Purpose Insecticide", "description", 150.0, Category.PESTICIDES, 20, 5);
+    	add(inventory, 8, "Garden Fungicide", "description", 180.0, Category.PESTICIDES, 20, 5);
+    	add(inventory, 9, "Garden Herbicide", "description", 200.0, Category.PESTICIDES, 20, 5);
+    	add(inventory, 10, "Hand Trowel", "description", 100.0, Category.HAND_TOOLS, 20, 5);
+    	add(inventory, 11, "Pruning Shears", "description", 180.0, Category.HAND_TOOLS, 20, 5);
+    	add(inventory, 12, "Hand Cultivator", "description", 120.0, Category.HAND_TOOLS, 20, 5);
+    	add(inventory, 13, "Watering Can", "description", 150.0, Category.WATERING, 20, 5);
+    	add(inventory, 14, "Hose Nozzle", "description", 90.0, Category.WATERING, 20, 5);
+    	add(inventory, 15, "Seedling Tray", "description", 80.0, Category.PLANTING_MATERIALS, 20, 5);
+    	add(inventory, 16, "Nursery Pots", "description", 10.0, Category.PLANTING_MATERIALS, 20, 5);
+    	add(inventory, 17, "Plant Labels", "description", 30.0, Category.PLANTING_MATERIALS, 20, 5);
     } // end of addProducts
     
     /*
