@@ -180,7 +180,7 @@ public class InventoryScreen extends BorderPane {
                     || item.getProduct().getName().toLowerCase().contains(text);
             boolean matchesCategory = category == null
                     || category.equals(ALL_CATEGORIES)
-                    || item.getProduct().getCategory().equals(category);
+                    || item.getProduct().getCategory().toString().equals(category);
             boolean matchesLow = !lowOnly || item.isLowStock();
             return matchesText && matchesCategory && matchesLow;
         }); // end of .setPredicate
@@ -198,7 +198,7 @@ public class InventoryScreen extends BorderPane {
             banner.setText(lowCount + " item(s) at or below the low-stock threshold - consider restocking.");
             banner.setStyle("-fx-background-color: #ffe9b3; -fx-font-weight: bold;");
         } else {
-            banner.setText("All stock levels are healthy.");
+            banner.setText("All stock levels are good.");
             banner.setStyle("-fx-background-color: #d8f3dc;");
         } // end of if else statement
         

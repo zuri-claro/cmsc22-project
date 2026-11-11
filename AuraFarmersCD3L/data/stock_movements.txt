@@ -1,0 +1,2 @@
+1|6|26|manager|test|
+1|-23|3|manager|another test|

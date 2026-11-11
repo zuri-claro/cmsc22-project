@@ -30,10 +30,29 @@ public class InventoryItem {
      * 	- getProduct()
      * 	- getCurrentStock()
      * 	- getLowStockThreshold()
+	 * 	- getProductId()
+	 * 	- getName()
+	 * 	- getCategory()
+	 * 	- getStatus()
      */
 	public Product getProduct() {return product;}
 	public int getCurrentStock() {return currentStock;}
 	public int getLowStockThreshold() {return lowStockThreshold;}
+	
+	public int getProductId() {return product.getProductId();}
+	public String getName() {return product.getName();}
+	public Category getCategory() {return product.getCategory();}
+	public String getStatus() {
+		if (!product.isActive()) {
+			return "Inactive";
+		} else if (currentStock <= 0) {
+			return "Out of Stock";
+		} else if (isLowStock()) {
+			return "Low Stock";
+		} else {
+			return "Available";
+		} // end of if else statement
+	} // end of getStatus
 	
 	/*
 	 * SETTERS

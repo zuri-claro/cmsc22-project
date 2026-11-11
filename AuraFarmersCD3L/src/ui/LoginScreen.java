@@ -85,8 +85,9 @@ public class LoginScreen extends VBox {
         
         // open either manager dashboard or clerk dashboard
         if (user.getRole().equals(Role.MANAGER)) {
-        	stage.setScene(new Scene(new ManagerDashboard((Manager) user, system.getInventoryService(), system.getUsers()), 900, 560));
-        	
+        	ManagerDashboard managerDashboard = new ManagerDashboard((Manager) user, system.getInventoryService(), system.getUsers());
+        	managerDashboard.setInventoryAction(() -> stage.setScene(new Scene(new InventoryScreen(system), 900, 560)));
+        	stage.setScene(new Scene(managerDashboard, 900, 560));
         } else {
         	//stage.setScene(new Scene(new ClerkDashboard((Clerk) user, system.getInventoryService()), 900, 560));
         	

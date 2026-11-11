@@ -1,4 +1,4 @@
-1|Tomato Seeds|description|35.0|SEEDS|true|20|5
+1|Tomato Seeds|description|35.0|SEEDS|true|3|5
 2|Pechay Seeds|description|25.0|SEEDS|true|20|5
 3|Sweet Corn Seeds|description|50.0|SEEDS|true|20|5
 4|Organic Compost|description|120.0|FERTILIZERS_SOIL|true|20|5

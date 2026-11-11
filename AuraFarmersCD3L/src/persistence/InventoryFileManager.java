@@ -89,8 +89,8 @@ public class InventoryFileManager {
         try {
         	
         	BufferedReader reader = new BufferedReader(new FileReader(itemsFile));
-            String line = reader.readLine();
-            while (line != null) {
+            String line;
+            while ((line = reader.readLine()) != null) {
             	
             	// skip whitespace
                 if (line.trim().isEmpty()) {continue;}
@@ -121,9 +121,7 @@ public class InventoryFileManager {
                     
                 } catch (RuntimeException e) {
                 } // end of try catch
-                
-                line = reader.readLine();
-                
+                                
             } // end of while loop
             reader.close();
             
@@ -167,15 +165,15 @@ public class InventoryFileManager {
         try {
         	
         	BufferedReader reader = new BufferedReader(new FileReader(movementsFile));
-            String line = reader.readLine();
-            while (line != null) {
+            String line;
+            while ((line = reader.readLine()) != null) {
             	
                 if (line.trim().isEmpty()) {
                     continue;
                 } // end of if statement
                 
                 String[] parts = line.split("\\|", -1);
-                if (parts.length != 7) {
+                if (parts.length != 6) {
                     System.out.println("Skipped a bad line in movements file: " + line);
                     continue;
                 } // end of if statement
@@ -191,8 +189,6 @@ public class InventoryFileManager {
                 } catch (RuntimeException e) {
                     System.out.println("Skipped a bad line in movements file: " + line);
                 } // end of try catch
-                
-                line = reader.readLine();
                 
             } // end of while loop
             reader.close();
