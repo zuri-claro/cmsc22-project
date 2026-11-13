@@ -62,8 +62,7 @@ public class InventoryFileManager {
         	// print all attributes of each inventory item product
             for (InventoryItem item : items) {
                 Product product = item.getProduct();
-                writer.println(product.getProductId() + SEPARATOR + clean(product.getName()) + SEPARATOR + clean(product.getDescription()) + SEPARATOR + product.getPrice() + SEPARATOR + product.getCategory().name() + SEPARATOR + product.isActive() + SEPARATOR + item.getCurrentStock() + SEPARATOR + item.getLowStockThreshold());
-            } // end of for loop
+                writer.println(product.getProductId() + SEPARATOR + clean(product.getName()) + SEPARATOR + clean(product.getDescription()) + SEPARATOR + product.getPrice() + SEPARATOR + product.getCategory().name() + SEPARATOR + product.isActive() + SEPARATOR + item.getCurrentStock() + SEPARATOR + item.getLowStockThreshold() + SEPARATOR + clean(product.getUnit()));            } // end of for loop
             writer.close();
             
         } catch (IOException e) {
@@ -95,11 +94,11 @@ public class InventoryFileManager {
             	// skip whitespace
                 if (line.trim().isEmpty()) {continue;}
                 
-                // divide each line into 8 parts
+                // divide each line into 9 parts (older files only have 8, the unit is missing)
                 String[] parts = line.split("\\|", -1);
                 
                 // error: not divided properly
-                if (parts.length != 8) {
+                if (parts.length != 8 && parts.length != 9) {
                     continue;
                 } // end of if statement
                 
@@ -114,9 +113,10 @@ public class InventoryFileManager {
                     boolean status = Boolean.parseBoolean(parts[5]);
                     int stock = Integer.parseInt(parts[6]);
                     int threshold = Integer.parseInt(parts[7]);
+                    String unit = (parts.length == 9) ? parts[8] : ""; // empty becomes "Piece" in Product
                     
                     // create new product and inventory item using those attributes
-                    Product product = new Product(id, name, description, price, category, status);
+                    Product product = new Product(id, name, description, price, category, status, unit);
                     items.add(new InventoryItem(product, stock, threshold));
                     
                 } catch (RuntimeException e) {
