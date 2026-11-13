@@ -89,7 +89,7 @@ public class LoginScreen extends VBox {
         	managerDashboard.setInventoryAction(() -> stage.setScene(new Scene(new InventoryScreen(system), 900, 560)));
         	stage.setScene(new Scene(managerDashboard, 900, 560));
         } else {
-        	//stage.setScene(new Scene(new ClerkDashboard((Clerk) user, system.getInventoryService()), 900, 560));
+        	stage.setScene(new Scene(new ClerkDashboard((Clerk) user, system.getInventoryService()), 900, 560));
         	
         } // end of if else statement
         
