@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class SalesTransaction {
 
@@ -12,9 +13,12 @@ public class SalesTransaction {
     private final double totalAmount;
     private final double cashReceived;
     private final double changeGiven;
-
+    private ArrayList<InventoryItem> itemsPurchased;
+    private ArrayList<Integer> quantitiesPurchased;
+    
     //constructor
-    public SalesTransaction(String clerkName, double totalAmount, double cashReceived, double changeGiven) {
+    public SalesTransaction(String clerkName, double totalAmount, double cashReceived, double changeGiven, 
+    		ArrayList<InventoryItem> itemsPurchased, ArrayList<Integer> quantitiesPurchased) {
     	//gives current time and date
     	this.transactionDate = LocalDate.now();
     	this.transactionTime = LocalTime.now();
@@ -24,6 +28,10 @@ public class SalesTransaction {
         this.totalAmount = totalAmount;
         this.cashReceived = cashReceived;
         this.changeGiven = changeGiven;
+        
+        // purchased items and amount purchased
+        this.itemsPurchased = new ArrayList<>(itemsPurchased);
+        this.quantitiesPurchased = new ArrayList<>(quantitiesPurchased);
     }
 
     //getters
@@ -49,5 +57,13 @@ public class SalesTransaction {
 
     public double getChangeGiven() {
         return changeGiven;
+    }
+    
+    public ArrayList<InventoryItem> getItemsPurchased() {
+        return itemsPurchased;
+    }
+
+    public ArrayList<Integer> getQuantitiesPurchased() {
+        return quantitiesPurchased;
     }
 }

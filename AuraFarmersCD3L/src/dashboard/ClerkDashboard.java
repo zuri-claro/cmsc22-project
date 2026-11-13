@@ -6,6 +6,7 @@ package dashboard;
  */
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,6 +17,7 @@ import javafx.scene.control.ScrollPane;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import java.util.ArrayList;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -82,6 +84,11 @@ public class ClerkDashboard extends Dashboard {
             historyTable.setManaged(!isVisible);
         });
         historyBtn.setPrefWidth(200);
+        historyBtn.setStyle(
+                "-fx-background-color: #542020;" +
+                "-fx-text-fill: white;" +
+                "-fx-padding: 10px 15px;"
+        );
         
         // select a row on the transaction history table. once selected, if void btn is clicked, that transaction becomes void
         voidBtn.setOnAction(event -> {
@@ -103,8 +110,20 @@ public class ClerkDashboard extends Dashboard {
             // gets current number of voided transactions and increments it by 1
             int currentVoided = Integer.parseInt(voidedValue.getText());
             voidedValue.setText(String.valueOf(currentVoided + 1));
+            
+            // returns the purchased stock back to inventory
+            for (int i = 0; i < selectedTransaction.getItemsPurchased().size(); i++) {
+                InventoryItem item = inventory.findByProductId(selectedTransaction.getItemsPurchased().get(i).getProductId());
+                item.setCurrentStock(item.getCurrentStock() + selectedTransaction.getQuantitiesPurchased().get(i));
+            }
+            productCatalog.refresh();
         });
         voidBtn.setPrefWidth(200);
+        voidBtn.setStyle(
+                "-fx-background-color: #542020;" +
+                "-fx-text-fill: white;" +
+                "-fx-padding: 10px 15px;"
+        );
         
         VBox actions = new VBox(
         		15,
@@ -113,9 +132,12 @@ public class ClerkDashboard extends Dashboard {
         		historyTable
         );
         
-       
+        // creates the "Product Catalog" indicator with a styled label
         Label catalogLabel = new Label("Product Catalog");
-
+        catalogLabel.setMaxWidth(Double.MAX_VALUE);
+        catalogLabel.setAlignment(Pos.CENTER);
+        catalogLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px; -fx-alignment: center;");
+        
         // creates a product catalog table
         productCatalog = createProductCatalog();
         
@@ -130,7 +152,10 @@ public class ClerkDashboard extends Dashboard {
                 purchaseEntry,
                 actions
         );
-
+        
+        VBox.setMargin(catalogLabel, new Insets(20, 0, 0, 0));
+        VBox.setMargin(purchaseEntry, new Insets(20, 0, 0, 0));
+        VBox.setMargin(actions, new Insets(20, 0, 0, 0));
         mainContent.setPadding(new Insets(20));
         ScrollPane scrollPane = new ScrollPane(mainContent);
         scrollPane.setFitToWidth(true);
@@ -207,7 +232,10 @@ public class ClerkDashboard extends Dashboard {
     
     // acts as an online cash register/cart for processing online purchases
     private VBox createPurchaseEntry() {
-        Label purchaseLabel = new Label("Purchase Entry");
+    	ArrayList<InventoryItem> itemsToBuy = new ArrayList<>();
+    	ArrayList<Integer> amtPerItem = new ArrayList<>();
+    	
+        Label purchaseLabel = new Label("PURCHASE ENTRY");
         Label selectedProductLabel = new Label("Selected Product:");
         Label currentPurchaseLabel = new Label("Current Purchase");
         Label totalLabel = new Label("Total Amount:");
@@ -223,10 +251,31 @@ public class ClerkDashboard extends Dashboard {
         cashReceivedField.setPromptText("Enter Cash Amount");
 
         Label changeLabel = new Label("Change:");
+        Label availabilityLabel = new Label();
         
         productCatalog.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem) -> {
-            if (newItem != null) {
-                selectedProductValue.setText(newItem.getProduct().getName());
+        	if (newItem == null) {
+                selectedProductValue.setText("None");
+                availabilityLabel.setText("");
+                return;
+            }
+            selectedProductValue.setText(newItem.getProduct().getName());
+            
+            int quantityAlreadyInCart = 0;
+            for (int i = 0; i < itemsToBuy.size(); i++) {
+                if (itemsToBuy.get(i).getProductId() == newItem.getProductId()) {
+                    quantityAlreadyInCart += amtPerItem.get(i);
+                }
+            }
+
+            int remainingStock = newItem.getCurrentStock() - quantityAlreadyInCart;
+            if (remainingStock <= 0) {
+                availabilityLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 14px;");
+                availabilityLabel.setText("Product unavailable for purchase!");
+            }
+            else {
+                availabilityLabel.setStyle("-fx-text-fill: green; -fx-font-weight: bold; -fx-font-size: 14px;");
+                availabilityLabel.setText("Product available for purchase!");
             }
         });
 
@@ -235,16 +284,63 @@ public class ClerkDashboard extends Dashboard {
         addButton.setOnAction(event -> {
             InventoryItem product = productCatalog.getSelectionModel().getSelectedItem();
             
-            if(product == null) {
+            if (product == null) {
                 return;
             }
+            
+            InventoryItem checkAvailability = inventory.findByProductId(product.getProductId());
+            int itemStock = checkAvailability.getCurrentStock();
 
-            int quantity = Integer.parseInt(quantityField.getText());
+            int quantityAlreadyInCart = 0;
+            for (int i = 0; i < itemsToBuy.size(); i++) {
+                if (itemsToBuy.get(i).getProductId() == product.getProductId()) {
+                    quantityAlreadyInCart += amtPerItem.get(i);
+                }
+            }
+            int remainingStock = itemStock - quantityAlreadyInCart;
+            
+            int quantity;
+            try {
+                quantity = Integer.parseInt(quantityField.getText());
+            }
+            catch(NumberFormatException e) {
+                availabilityLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 14px;");
+                availabilityLabel.setText("Please enter a valid quantity!");
+                return;
+            }
+            
+            if (quantity <= 0) {
+            	availabilityLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 14px;");
+                availabilityLabel.setText("Invalid purchase quantity!");
+                return;
+            }
+            if (quantity > remainingStock) {
+            	availabilityLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 14px;");
+            	availabilityLabel.setText("Purchase quantity exceeds stock!");
+            	return;
+            }
+            
+        	availabilityLabel.setStyle("-fx-text-fill: green; -fx-font-weight: bold; -fx-font-size: 14px;");
+        	availabilityLabel.setText("Item has been added to cart.");
+            
             double itemTotal = product.getProduct().getPrice() * quantity;
+
+            itemsToBuy.add(product);
+            amtPerItem.add(quantity);
+            
+            int updatedRemainingStock = remainingStock - quantity;
+            if (updatedRemainingStock <= 0) {
+                availabilityLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 14px;");
+                availabilityLabel.setText("Product is now out of stock.");
+            }
+            else {
+                availabilityLabel.setStyle("-fx-text-fill: green; -fx-font-weight: bold; -fx-font-size: 14px;");
+                availabilityLabel.setText("Item has been added to cart. Remaining stock: " + updatedRemainingStock);
+            }
 
             totalAmount += itemTotal;
             totalAmountValue.setText(String.format("₱%.2f", totalAmount));
-            
+          
             purchaseItems.getChildren().add(new Label(product.getProduct().getName() + " x " + quantity));
         });
         
@@ -268,7 +364,8 @@ public class ClerkDashboard extends Dashboard {
 
             changeValue.setText(String.format("₱%.2f", change));
 
-            SalesTransaction transaction = new SalesTransaction(clerk.getDisplayName(), totalAmount, cashReceived, change);
+            SalesTransaction transaction = new SalesTransaction(clerk.getDisplayName(), totalAmount, cashReceived, change,
+            		itemsToBuy, amtPerItem);
             transactionHistory.add(transaction);
             
             salesToday += totalAmount;
@@ -282,7 +379,20 @@ public class ClerkDashboard extends Dashboard {
             totalAmountValue.setText("₱0.00");
             productCatalog.getSelectionModel().clearSelection();
             selectedProductValue.setText("None");
+            changeValue.setText("P0.00");
+            
+            for (int i = 0; i < itemsToBuy.size(); i++) {
+            	InventoryItem item = inventory.findByProductId(itemsToBuy.get(i).getProductId());
 
+                if (item != null) {
+                    item.setCurrentStock(item.getCurrentStock() - amtPerItem.get(i));
+                }
+            }
+
+            productCatalog.refresh();
+
+            itemsToBuy.clear();
+            amtPerItem.clear();
             quantityField.clear();
             cashReceivedField.clear();
         });
@@ -292,6 +402,7 @@ public class ClerkDashboard extends Dashboard {
             purchaseLabel,
             selectedProductLabel,
             selectedProductValue,
+            availabilityLabel,
             quantityField,
             addButton,
             currentPurchaseLabel,
@@ -304,6 +415,13 @@ public class ClerkDashboard extends Dashboard {
             changeValue,
             completeBtn
         );
+        
+        purchaseEntry.setPadding(new Insets(20));
+        purchaseEntry.setStyle("-fx-background-color: white;" + "-fx-border-color: #ADD8E6;" + "-fx-border-width: 1;" +
+            "-fx-border-radius: 10;" + "-fx-background-radius: 10;");
+        purchaseLabel.setMaxWidth(Double.MAX_VALUE);
+        purchaseLabel.setAlignment(Pos.CENTER);
+        purchaseLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px; -fx-alignment: center;");
         return purchaseEntry;
     }
     
