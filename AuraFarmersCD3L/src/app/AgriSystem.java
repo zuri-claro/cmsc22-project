@@ -10,6 +10,7 @@ import model.Role;
 import model.User;
 import persistence.InventoryFileManager;
 import service.InventoryService;
+import service.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class AgriSystem {
 
     private List<User> users = new ArrayList<>();
     private final InventoryService inventoryService;
+    private final ProductService productService;
     private User currentUser;
 
     // METHODS
@@ -55,6 +57,7 @@ public class AgriSystem {
         } // end of if statement
 
         inventoryService = new InventoryService(inventory, fileManager);
+        productService = new ProductService(inventoryService);
         
         // TEMPORARY FOR TESTINGGG - add users
         User manager = new Manager("manager","manager123","m");
@@ -80,10 +83,12 @@ public class AgriSystem {
      * 	- getUsers()
      * 	- getInventoryService()
      * 	- getCurrentUser()
+     * - getProductService()
      */
     public List<User> getUsers() {return users;}
     public InventoryService getInventoryService() {return inventoryService;}
     public User getCurrentUser() {return currentUser;}
+    public ProductService getProductService() {return productService;}
 
     /*
      * login(String, String)
@@ -104,37 +109,37 @@ public class AgriSystem {
     
     /*
      * addProducts(Inventory)
-     * 	- hardcoded all products
-     * 	- to put ALL our products so that our inventory is complete
-     * 	- by default, all stock is 0
+     * 	- hardcoded all products (the 17 products from the business proposal)
+     * 	- by default, all stock is 0 and the low stock threshold is 5
      */
     private void addProducts(Inventory inventory) {
-    	add(inventory, 1, "Tomato Seeds", "description", 35.0, Category.SEEDS, 0, 5);
-    	add(inventory, 2, "Pechay Seeds", "description", 25.0, Category.SEEDS, 0, 5);
-    	add(inventory, 3, "Sweet Corn Seeds", "description", 50.0, Category.SEEDS, 0, 5);
-    	add(inventory, 4, "Organic Compost", "description", 120.0, Category.FERTILIZERS_SOIL, 0, 5);
-    	add(inventory, 5, "Complete Fertilizer", "description", 180.0, Category.FERTILIZERS_SOIL, 0, 5);
-    	add(inventory, 6, "Vermicast", "description", 100.0, Category.FERTILIZERS_SOIL, 0, 5);
-    	add(inventory, 7, "General-Purpose Insecticide", "description", 150.0, Category.PESTICIDES, 0, 5);
-    	add(inventory, 8, "Garden Fungicide", "description", 180.0, Category.PESTICIDES, 0, 5);
-    	add(inventory, 9, "Garden Herbicide", "description", 200.0, Category.PESTICIDES, 0, 5);
-    	add(inventory, 10, "Hand Trowel", "description", 100.0, Category.HAND_TOOLS, 0, 5);
-    	add(inventory, 11, "Pruning Shears", "description", 180.0, Category.HAND_TOOLS, 0, 5);
-    	add(inventory, 12, "Hand Cultivator", "description", 120.0, Category.HAND_TOOLS, 0, 5);
-    	add(inventory, 13, "Watering Can", "description", 150.0, Category.WATERING, 0, 5);
-    	add(inventory, 14, "Hose Nozzle", "description", 90.0, Category.WATERING, 0, 5);
-    	add(inventory, 15, "Seedling Tray", "description", 80.0, Category.PLANTING_MATERIALS, 0, 5);
-    	add(inventory, 16, "Nursery Pots", "description", 10.0, Category.PLANTING_MATERIALS, 0, 5);
-    	add(inventory, 17, "Plant Labels", "description", 30.0, Category.PLANTING_MATERIALS, 0, 5);
+    	//  inventory, id, name, description, price, category, unit, stock, threshold
+    	add(inventory, 1, "Tomato Seeds", "Seeds for growing tomato plants", 35.0, Category.SEEDS, "Packet", 0, 5);
+    	add(inventory, 2, "Pechay Seeds", "Seeds for growing pechay", 25.0, Category.SEEDS, "Packet", 0, 5);
+    	add(inventory, 3, "Sweet Corn Seeds", "Seeds for growing sweet corn", 50.0, Category.SEEDS, "Packet", 0, 5);
+    	add(inventory, 4, "Organic Compost", "Organic material for improving soil conditions", 120.0, Category.FERTILIZERS_SOIL, "Bag", 0, 5);
+    	add(inventory, 5, "Complete Fertilizer", "Fertilizer for general plant nutrient needs", 180.0, Category.FERTILIZERS_SOIL, "Bag", 0, 5);
+    	add(inventory, 6, "Vermicast", "Earthworm-produced soil amendment", 100.0, Category.FERTILIZERS_SOIL, "Bag", 0, 5);
+    	add(inventory, 7, "General-Purpose Insecticide", "Product intended to control specified insect pests", 150.0, Category.PESTICIDES, "Pack", 0, 5);
+    	add(inventory, 8, "Garden Fungicide", "Product intended to control specified fungal diseases", 180.0, Category.PESTICIDES, "Pack", 0, 5);
+    	add(inventory, 9, "Garden Herbicide", "Product intended to control specified weeds", 200.0, Category.PESTICIDES, "Bottle", 0, 5);
+    	add(inventory, 10, "Hand Trowel", "Small tool for digging and transplanting", 100.0, Category.HAND_TOOLS, "Piece", 0, 5);
+    	add(inventory, 11, "Pruning Shears", "Tool for trimming small branches and stems", 180.0, Category.HAND_TOOLS, "Piece", 0, 5);
+    	add(inventory, 12, "Hand Cultivator", "Tool for loosening soil and removing weeds", 120.0, Category.HAND_TOOLS, "Piece", 0, 5);
+    	add(inventory, 13, "Watering Can", "Container used for watering plants", 150.0, Category.WATERING, "Piece", 0, 5);
+    	add(inventory, 14, "Hose Nozzle", "Attachment for controlling water flow", 90.0, Category.WATERING, "Piece", 0, 5);
+    	add(inventory, 15, "Seedling Tray", "Tray for starting seeds and growing seedlings", 80.0, Category.PLANTING_MATERIALS, "Piece", 0, 5);
+    	add(inventory, 16, "Nursery Pots", "Containers for growing young plants", 10.0, Category.PLANTING_MATERIALS, "Piece", 0, 5);
+    	add(inventory, 17, "Plant Labels", "Labels for identifying plant varieties", 30.0, Category.PLANTING_MATERIALS, "Pack", 0, 5);
     } // end of addProducts
     
     /*
-     * add(Inventory, int, String, String, double, Category, int, int)
+     * add(Inventory, int, String, String, double, Category, String, int, int)
      * 	- helper function for addProducts
      * 	- instantiates a Product object from the parameters and adds that product into the inventory
      */
-    private void add(Inventory inventory, int id, String name, String description, double price, Category category, int stock, int threshold) {
-        Product product = new Product(id, name, description, price, category);
+    private void add(Inventory inventory, int id, String name, String description, double price, Category category, String unit, int stock, int threshold) {
+        Product product = new Product(id, name, description, price, category, true, unit);
         inventory.addItem(new InventoryItem(product, stock, threshold));
     } // end of add
     
